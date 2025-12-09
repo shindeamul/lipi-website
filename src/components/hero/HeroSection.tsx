@@ -43,7 +43,7 @@ export const HeroSection = () => {
       </motion.div>
 
       {/* Birds SVG */}
-      {/* <div className="absolute inset-0 z-[5] hidden sm:block pointer-events-none">
+      <div className="absolute inset-0 z-[8] hidden sm:block pointer-events-none">
         <motion.svg className="absolute left-[8%] top-[15%]" width="100" height="50" viewBox="0 0 80 40"
           animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
