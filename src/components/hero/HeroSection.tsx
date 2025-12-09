@@ -54,7 +54,7 @@ export const HeroSection = () => {
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}>
           <path d="M40 20 C20 8, 5 12, 0 22 L40 20 L80 22 C75 12, 60 8, 40 20" className="fill-foreground/75" />
         </motion.svg>
-      </div>
+      </div> */}
 
       <FloatingParticles />
 

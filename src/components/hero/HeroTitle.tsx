@@ -17,17 +17,17 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
     },
   };
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
+export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.5,
+            },
+        },
+    };
 
   if (showOnlyJourneyText) {
     return (
@@ -93,11 +93,18 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
         MAHABHARAT & RAMAYANA
       </motion.h2>
 
-      {/* Decorative Line */}
-      <motion.div
-        className="w-20 sm:w-28 md:w-36 h-px bg-gradient-to-r from-transparent via-foreground/50 to-transparent mb-8"
-        variants={itemVariants}
-      />
+                {/* Journey Text */}
+                <motion.div
+                    className="mt-14 sm:mt-8 flex flex-col items-center gap-0.5"
+                    variants={itemVariants}
+                >
+                    <span className="font-elegant text-foreground/90 text-xs sm:text-sm md:text-base tracking-[0.4em] uppercase">
+                        A Journey
+                    </span>
+                    <span className="font-elegant text-foreground/90 text-xs sm:text-sm md:text-base tracking-[0.4em] uppercase">
+                        Into
+                    </span>
+                </motion.div>
 
       {/* Journey Text */}
       <motion.div
