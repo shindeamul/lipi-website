@@ -43,18 +43,18 @@ export const HeroSection = () => {
       </motion.div>
 
       {/* Birds SVG */}
-      <div className="absolute inset-0 z-[5] hidden sm:block pointer-events-none">
-        <motion.svg className="absolute left-[8%] top-[30%]" width="70" height="35" viewBox="0 0 80 40"
+      {/* <div className="absolute inset-0 z-[5] hidden sm:block pointer-events-none">
+        <motion.svg className="absolute left-[8%] top-[15%]" width="100" height="50" viewBox="0 0 80 40"
           animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
-          <path d="M40 20 C20 8, 5 12, 0 22 L40 20 L80 22 C75 12, 60 8, 40 20" className="fill-foreground/60" />
+          <path d="M40 20 C20 8, 5 12, 0 22 L40 20 L80 22 C75 12, 60 8, 40 20" className="fill-foreground/85" />
         </motion.svg>
-        <motion.svg className="absolute right-[15%] top-[20%]" width="40" height="20" viewBox="0 0 80 40"
+        <motion.svg className="absolute right-[12%] top-[12%]" width="80" height="40" viewBox="0 0 80 40"
           animate={{ y: [0, -10, 0], x: [0, -8, 0] }}
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}>
-          <path d="M40 20 C20 8, 5 12, 0 22 L40 20 L80 22 C75 12, 60 8, 40 20" className="fill-foreground/40" />
+          <path d="M40 20 C20 8, 5 12, 0 22 L40 20 L80 22 C75 12, 60 8, 40 20" className="fill-foreground/75" />
         </motion.svg>
-      </div>
+      </div> */}
 
       <FloatingParticles />
 
@@ -65,9 +65,24 @@ export const HeroSection = () => {
       <div className="absolute inset-0 z-[7] pointer-events-none" 
         style={{ background: "radial-gradient(ellipse at center, transparent 0%, hsl(215 40% 8% / 0.5) 80%)" }} />
 
-      {/* Main Content */}
+      {/* Top Title Section */}
+      <motion.div
+        className="absolute top-8 sm:top-12 left-0 right-0 z-[10] flex flex-col items-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+      >
+        <h1 className="title-gold text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 sm:mb-4">
+          LIPI GAMES
+        </h1>
+        <h2 className="title-gold text-sm sm:text-base md:text-lg lg:text-xl font-medium tracking-[0.3em] sm:tracking-[0.4em]">
+          MAHABHARAT & RAMAYANA
+        </h2>
+      </motion.div>
+
+      {/* Main Content - Centered */}
       <div className="absolute inset-0 z-[10] flex flex-col items-center justify-center">
-        <HeroTitle />
+        <HeroTitle showOnlyJourneyText={true} />
         <motion.div className="mt-10 sm:mt-14"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
