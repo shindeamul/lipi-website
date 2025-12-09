@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Fantasy cinematic color palette */
+    --background: 215 28% 12%;
+    --foreground: 45 30% 90%;
+
+    --card: 215 25% 15%;
+    --card-foreground: 45 30% 90%;
+
+    --popover: 215 25% 15%;
+    --popover-foreground: 45 30% 90%;
+
+    /* Golden amber primary - for titles */
+    --primary: 38 70% 50%;
+    --primary-foreground: 38 10% 10%;
+
+    /* Misty secondary */
+    --secondary: 210 20% 30%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 215 15% 25%;
+    --muted-foreground: 215 15% 65%;
+
+    /* Golden accent */
+    --accent: 43 80% 55%;
+    --accent-foreground: 43 10% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 20% 25%;
+    --input: 215 20% 25%;
+    --ring: 38 70% 50%;
+
+    --radius: 0.5rem;
+
+    /* Custom fantasy variables */
+    --gold: 38 70% 50%;
+    --gold-light: 43 80% 65%;
+    --gold-dark: 35 65% 35%;
+    --mist: 210 30% 85%;
+    --mountain-blue: 210 35% 25%;
+    --deep-navy: 215 40% 8%;
+
+    /* Cinematic effects */
+    --glow-gold: 0 0 30px hsl(38 70% 50% / 0.5), 0 0 60px hsl(38 70% 50% / 0.3), 0 0 100px hsl(43 80% 55% / 0.2);
+    --text-shadow-cinematic: 2px 2px 4px hsl(0 0% 0% / 0.8), 0 0 40px hsl(38 70% 50% / 0.3);
+    --vignette: radial-gradient(ellipse at center, transparent 0%, hsl(215 40% 8% / 0.4) 70%, hsl(215 40% 8% / 0.9) 100%);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 215 40% 8%;
+    --foreground: 45 30% 90%;
+
+    --card: 215 35% 12%;
+    --card-foreground: 45 30% 90%;
+
+    --popover: 215 35% 12%;
+    --popover-foreground: 45 30% 90%;
+
+    --primary: 38 70% 50%;
+    --primary-foreground: 38 10% 10%;
+
+    --secondary: 210 25% 20%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 215 20% 18%;
+    --muted-foreground: 215 15% 60%;
+
+    --accent: 43 80% 55%;
+    --accent-foreground: 43 10% 10%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 25% 20%;
+    --input: 215 25% 20%;
+    --ring: 38 70% 50%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Fantasy heading typography */
+  .font-fantasy {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-elegant {
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
+
+@layer components {
+  /* Golden embossed title effect */
+  .title-gold {
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: hsl(38 70% 55%);
+    text-shadow: 
+      0 1px 0 hsl(35 65% 25%),
+      0 2px 0 hsl(35 60% 20%),
+      0 3px 4px hsl(0 0% 0% / 0.6),
+      0 0 30px hsl(38 70% 50% / 0.5),
+      0 0 60px hsl(38 70% 50% / 0.3);
+  }
+
+  /* Cinematic vignette overlay */
+  .vignette-overlay {
+    background: var(--vignette);
+    pointer-events: none;
+  }
+
+  /* Lens flare effect */
+  .lens-flare {
+    background: radial-gradient(
+      ellipse at 70% 20%,
+      hsl(43 80% 85% / 0.15) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+  }
+
+  /* Floating particles */
+  .particle {
+    @apply absolute rounded-full opacity-20;
+    background: hsl(var(--mist));
+    animation: float 20s ease-in-out infinite;
+  }
+
+  /* Begin button circle */
+  .begin-button {
+    @apply relative rounded-full border border-foreground/30 bg-transparent backdrop-blur-sm;
+    @apply font-fantasy uppercase tracking-[0.4em] text-foreground/80;
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .begin-button:hover {
+    @apply border-primary/60 text-primary;
+    box-shadow: 
+      0 0 20px hsl(38 70% 50% / 0.3),
+      0 0 40px hsl(38 70% 50% / 0.2),
+      0 0 60px hsl(38 70% 50% / 0.15),
+      inset 0 0 20px hsl(38 70% 50% / 0.1);
+  }
+
+  /* Download button styles */
+  .download-btn {
+    @apply transition-all duration-300;
+  }
+
+  .download-btn:hover {
+    box-shadow: 
+      0 0 25px hsl(38 70% 50% / 0.25),
+      0 0 50px hsl(38 70% 50% / 0.15),
+      inset 0 0 15px hsl(38 70% 50% / 0.08);
+    border-color: hsl(38 70% 50% / 0.6);
+  }
+}
+
+@layer utilities {
+  /* Parallax depth classes */
+  .parallax-slow {
+    will-change: transform;
+    transition: transform 0.3s ease-out;
+  }
+
+  .parallax-medium {
+    will-change: transform;
+    transition: transform 0.2s ease-out;
+  }
+
+  .parallax-fast {
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+  }
+}
+
+/* Keyframe animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-30px) translateX(15px);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(3%) translateY(-2%);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes bird-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
