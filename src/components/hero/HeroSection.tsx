@@ -42,19 +42,7 @@ export const HeroSection = () => {
         <img src={cloudsLayer} alt="" className="h-full w-full object-cover scale-x-[-1]" />
       </motion.div>
 
-      {/* Birds SVG */}
-      <div className="absolute inset-0 z-[8] hidden sm:block pointer-events-none">
-        <motion.svg className="absolute left-[8%] top-[15%]" width="100" height="50" viewBox="0 0 80 40"
-          animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
-          <path d="M40 20 C20 8, 5 12, 0 22 L40 20 L80 22 C75 12, 60 8, 40 20" className="fill-foreground/85" />
-        </motion.svg>
-        <motion.svg className="absolute right-[12%] top-[12%]" width="80" height="40" viewBox="0 0 80 40"
-          animate={{ y: [0, -10, 0], x: [0, -8, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}>
-          <path d="M40 20 C20 8, 5 12, 0 22 L40 20 L80 22 C75 12, 60 8, 40 20" className="fill-foreground/75" />
-        </motion.svg>
-      </div> */}
+
 
       <FloatingParticles />
 
