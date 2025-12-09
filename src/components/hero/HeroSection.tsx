@@ -42,6 +42,8 @@ export const HeroSection = () => {
         <img src={cloudsLayer} alt="" className="h-full w-full object-cover scale-x-[-1]" />
       </motion.div>
 
+
+
       <FloatingParticles />
 
       {/* Dark Gradient Overlay */}
