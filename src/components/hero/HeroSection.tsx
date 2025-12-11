@@ -3,6 +3,7 @@ import HeroTitle from "./HeroTitle";
 import BeginButton from "./BeginButton";
 import FloatingParticles from "./FloatingParticles";
 import FooterCredits from "./FooterCredits";
+import ScrollIndicator from "./ScrollIndicator";
 
 import heroBackground from "@/assets/hero-background.png";
 import cloudsLayer from "@/assets/clouds-layer.png";
@@ -43,7 +44,6 @@ export const HeroSection = () => {
       </motion.div>
 
 
-
       <FloatingParticles />
 
       {/* Dark Gradient Overlay */}
@@ -53,31 +53,21 @@ export const HeroSection = () => {
       <div className="absolute inset-0 z-[7] pointer-events-none" 
         style={{ background: "radial-gradient(ellipse at center, transparent 0%, hsl(215 40% 8% / 0.5) 80%)" }} />
 
-      {/* Top Title Section */}
-      <motion.div
-        className="absolute top-8 sm:top-12 left-0 right-0 z-[10] flex flex-col items-center"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-      >
-        <h1 className="title-gold text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 sm:mb-4">
-          LIPI GAMES
-        </h1>
-        <h2 className="title-gold text-sm sm:text-base md:text-lg lg:text-xl font-medium tracking-[0.3em] sm:tracking-[0.4em]">
-          MAHABHARAT & RAMAYANA
-        </h2>
-      </motion.div>
-
-      {/* Main Content - Centered */}
-      <div className="absolute inset-0 z-[10] flex flex-col items-center justify-center">
-        <HeroTitle showOnlyJourneyText={true} />
-        <motion.div className="mt-10 sm:mt-14"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}>
-          <BeginButton />
-        </motion.div>
+      {/* Main Content */}
+      <div className="absolute inset-0 z-[10]">
+        <HeroTitle />
+        <div className="absolute bottom-48 sm:bottom-56 left-0 right-0 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 1 }}>
+            <BeginButton />
+          </motion.div>
+        </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <ScrollIndicator />
 
       <FooterCredits />
     </section>

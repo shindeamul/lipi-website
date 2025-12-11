@@ -44,7 +44,7 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
                 />
 
                 {/* Journey Text */}
-                <motion.div
+                {/* <motion.div
                     className="mt-14 sm:mt-8 flex flex-col items-center gap-0.5"
                     variants={itemVariants}
                 >
@@ -54,10 +54,10 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
                     <span className="font-elegant text-foreground/90 text-xs sm:text-sm md:text-base tracking-[0.4em] uppercase">
                         Into
                     </span>
-                </motion.div>
+                </motion.div> */}
 
                 {/* EPIC-TRUTH */}
-                <motion.h3
+                {/* <motion.h3
                     className="font-fantasy text-foreground text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-[0.15em] sm:tracking-[0.2em] mt-1"
                     variants={itemVariants}
                     style={{
@@ -65,7 +65,7 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
                     }}
                 >
                     EPIC-TRUTH
-                </motion.h3>
+                </motion.h3> */}
             </motion.div>
         );
     }
@@ -100,7 +100,7 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
             />
 
             {/* Journey Text */}
-            <motion.div
+            {/* <motion.div
                 className="flex flex-col items-center gap-0.5"
                 variants={itemVariants}
             >
@@ -110,10 +110,10 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
                 <span className="font-elegant text-foreground/90 text-xs sm:text-sm md:text-base tracking-[0.4em] uppercase">
                     Into
                 </span>
-            </motion.div>
+            </motion.div> */}
 
             {/* EPIC-TRUTH */}
-            <motion.h3
+            {/* <motion.h3
                 className="font-fantasy text-foreground text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-[0.15em] sm:tracking-[0.2em] mt-6"
                 variants={itemVariants}
                 style={{
@@ -121,7 +121,7 @@ export const HeroTitle = ({ showOnlyJourneyText = false }: HeroTitleProps) => {
                 }}
             >
                 EPIC-TRUTH
-            </motion.h3>
+            </motion.h3> */}
         </motion.div>
     );
 };
