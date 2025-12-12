@@ -1,5 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
 
 interface Game {
   id: string;
@@ -122,7 +124,71 @@ const GameCard = ({ game, index }: { game: Game; index: number }) => {
   );
 };
 
-export const GamesSection = () => {
+// Mobile Carousel Component
+const MobileCarousel = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: true,
+    align: "center",
+    skipSnaps: false,
+  });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setCanScrollPrev(emblaApi.canScrollPrev());
+      setCanScrollNext(emblaApi.canScrollNext());
+    };
+
+    emblaApi.on("select", onSelect);
+    onSelect();
+
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi]);
+
+  return (
+    <div className="relative">
+      <div ref={emblaRef} className="overflow-hidden">
+        <div className="flex gap-4 px-4">
+          {games.map((game, index) => (
+            <div key={game.id} className="flex-[0_0_85%] min-w-0">
+              <GameCard game={game} index={index} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-center gap-4 mt-6">
+        <motion.button
+          onClick={() => emblaApi?.scrollPrev()}
+          className="p-3 rounded-full bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 transition-colors disabled:opacity-50"
+          disabled={!canScrollPrev}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </motion.button>
+        <motion.button
+          onClick={() => emblaApi?.scrollNext()}
+          className="p-3 rounded-full bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 transition-colors disabled:opacity-50"
+          disabled={!canScrollNext}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <ChevronRight className="w-6 h-6" />
+        </motion.button>
+      </div>
+    </div>
+  );
+};
+
+// Desktop Scroll Animation Component
+const DesktopScrollAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -132,7 +198,38 @@ export const GamesSection = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["10%", "-50%"]);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen bg-background overflow-hidden py-20">
+    <div ref={containerRef} className="relative h-[500px] sm:h-[550px]">
+      <motion.div 
+        className="absolute flex gap-6 sm:gap-8 px-8 sm:px-16"
+        style={{ x }}
+      >
+        {games.map((game, index) => (
+          <GameCard key={game.id} game={game} index={index} />
+        ))}
+        {/* Duplicate for seamless loop feel */}
+        {games.map((game, index) => (
+          <GameCard key={`${game.id}-dup`} game={game} index={index + games.length} />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+export const GamesSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return (
+    <section className="relative min-h-screen bg-background overflow-hidden py-20">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -157,33 +254,22 @@ export const GamesSection = () => {
         </p>
       </motion.div>
 
-      {/* Horizontal Scroll Container */}
-      <div className="relative h-[500px] sm:h-[550px]">
-        <motion.div 
-          className="absolute flex gap-6 sm:gap-8 px-8 sm:px-16"
-          style={{ x }}
-        >
-          {games.map((game, index) => (
-            <GameCard key={game.id} game={game} index={index} />
-          ))}
-          {/* Duplicate for seamless loop feel */}
-          {games.map((game, index) => (
-            <GameCard key={`${game.id}-dup`} game={game} index={index + games.length} />
-          ))}
-        </motion.div>
-      </div>
+      {/* Conditional Rendering: Mobile Carousel vs Desktop Scroll */}
+      {isMobile ? <MobileCarousel /> : <DesktopScrollAnimation />}
 
-      {/* Scroll Hint */}
-      <motion.div 
-        className="text-center mt-8"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        <p className="text-foreground/50 text-sm tracking-wider">
-          ← Scroll to explore more games →
-        </p>
-      </motion.div>
+      {/* Scroll Hint - Only on Desktop */}
+      {!isMobile && (
+        <motion.div 
+          className="text-center mt-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <p className="text-foreground/50 text-sm tracking-wider">
+            ← Scroll to explore more games →
+          </p>
+        </motion.div>
+      )}
     </section>
   );
 };

@@ -39,6 +39,9 @@ const StickyHeader = () => {
           <Link to="/about" className="text-foreground/80 hover:text-primary transition-colors text-sm tracking-wide">
             About
           </Link>
+          <Link to="/blog" className="text-foreground/80 hover:text-primary transition-colors text-sm tracking-wide">
+            Blog
+          </Link>
         </nav>
       </div>
     </motion.header>

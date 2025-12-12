@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Play } from "lucide-react";
+import VideoModal from "./VideoModal";
 
 interface Expert {
   id: number;
@@ -16,22 +17,33 @@ const experts: Expert[] = [
     name: "Sri Sri Sri Tridandi Chinna Jeeyar Swamiji",
     title: "Spiritual Leader",
     videoThumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=400&fit=crop",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     id: 2,
     name: "Yandamoori Veerendranath",
     title: "Novelist & Screenwriter",
     videoThumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=400&fit=crop",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     id: 3,
     name: "Dr. K Brahmanandam",
     title: "Indian Film Actor",
     videoThumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
 ];
 
-const ExpertVideoCard = ({ expert, index }: { expert: Expert; index: number }) => {
+const ExpertVideoCard = ({ 
+  expert, 
+  index,
+  onPlay 
+}: { 
+  expert: Expert; 
+  index: number;
+  onPlay: (expert: Expert) => void;
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -51,6 +63,7 @@ const ExpertVideoCard = ({ expert, index }: { expert: Expert; index: number }) =
       whileInView={{ y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
       viewport={{ once: true }}
+      onClick={() => onPlay(expert)}
     >
       {/* Video Thumbnail Container */}
       <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
@@ -115,69 +128,96 @@ const ExpertVideoCard = ({ expert, index }: { expert: Expert; index: number }) =
 
 const ExpertsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [selectedExpert, setSelectedExpert] = useState<Expert | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePlayVideo = (expert: Expert) => {
+    setSelectedExpert(expert);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedExpert(null);
+  };
 
   return (
-    <section
-      ref={sectionRef}
-      id="experts"
-      className="relative py-20 md:py-32 bg-gradient-to-b from-background via-background/95 to-background overflow-hidden"
-    >
-      {/* Background Decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        {/* Section Header */}
-        <motion.div
-          className="text-center mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-        >
-          <motion.span
-            className="inline-block text-orange-400 text-sm md:text-base font-medium tracking-widest uppercase mb-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            Testimonials
-          </motion.span>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Words from{" "}
-            <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              Experts
-            </span>
-          </h2>
-          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-            Hear what renowned personalities have to say about our language learning journey
-          </p>
-        </motion.div>
-
-        {/* Video Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-6xl mx-auto">
-          {experts.map((expert, index) => (
-            <ExpertVideoCard key={expert.id} expert={expert} index={index} />
-          ))}
+    <>
+      <section
+        ref={sectionRef}
+        id="experts"
+        className="relative py-20 md:py-32 bg-gradient-to-b from-background via-background/95 to-background overflow-hidden"
+      >
+        {/* Background Decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <p className="text-muted-foreground text-sm md:text-base">
-            Join thousands of learners who have transformed their language skills
-          </p>
-        </motion.div>
-      </div>
-    </section>
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
+          {/* Section Header */}
+          <motion.div
+            className="text-center mb-16 md:mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+          >
+            <motion.span
+              className="inline-block text-orange-400 text-sm md:text-base font-medium tracking-widest uppercase mb-4"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Testimonials
+            </motion.span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Words from{" "}
+              <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+                Experts
+              </span>
+            </h2>
+            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
+              Hear what renowned personalities have to say about our language learning journey
+            </p>
+          </motion.div>
+
+          {/* Video Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-6xl mx-auto">
+            {experts.map((expert, index) => (
+              <ExpertVideoCard 
+                key={expert.id} 
+                expert={expert} 
+                index={index}
+                onPlay={handlePlayVideo}
+              />
+            ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            className="text-center mt-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-muted-foreground text-sm md:text-base">
+              Join thousands of learners who have transformed their language skills
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Video Modal */}
+      <VideoModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        videoUrl={selectedExpert?.videoUrl}
+        expertName={selectedExpert?.name || ""}
+      />
+    </>
   );
 };
 
