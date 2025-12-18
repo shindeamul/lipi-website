@@ -9,21 +9,43 @@ const NewsletterSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email) {
       toast.error("Please enter your email address");
       return;
     }
 
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast.success("Thank you for subscribing! 🎉");
+
+    try {
+    const res = await fetch(
+      `${import.meta.env.VITE_GOOGLE_SHEET_API}`,
+      {
+        method: "POST",
+        // ✅ text/plain avoids preflight
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ email }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (!data?.success) {
+      toast.error(data?.error || "Subscription failed");
+      return;
+    }
+
+    toast.success(data.duplicate ? "You're already subscribed ✅" : "Thank you for subscribing! 🎉");
     setEmail("");
+  } catch (err) {
+    console.error(err);
+    toast.error("Something went wrong. Please try again.");
+  } finally {
     setIsSubmitting(false);
-  };
+  }
+    
+};
+
 
   return (
     <section className="relative py-20 overflow-hidden">

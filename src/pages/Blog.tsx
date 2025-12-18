@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Calendar, Clock, User, ArrowRight, Search } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { blogPosts } from "@/data/blogPosts";
+import { BlogPosts } from "@/data/blogPosts";
 import StickyHeader from "@/components/layout/StickyHeader";
 import Footer from "@/components/layout/Footer";
 import NewsletterSection from "@/components/newsletter/NewsletterSection";
 
+
 const Blog = () => {
+
+  const [blogs,setBlogs] = useState<BlogPosts[]>([])
+
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    fetch(`${import.meta.env.VITE_GOOGLE_SHEET_API}?action=blogs`)
+      .then((res) => res.json())
+      .then((data) => setBlogs(data.blogs))
+      .catch((err) => console.error(err));
+
   }, []);
 
   return (
@@ -79,7 +89,7 @@ const Blog = () => {
         <section className="py-16">
           <div className="container mx-auto px-4 md:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {blogPosts.map((post, index) => (
+              {blogs.map((post, index) => (
                 <motion.article
                   key={post.id}
                   className="group relative bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-orange-500/30 transition-all duration-500"
@@ -118,7 +128,7 @@ const Blog = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
-                        {post.readTime}
+                        {Math.round((post.content.length/60)/60)+" min read"}
                       </span>
                     </div>
 

@@ -1,4 +1,4 @@
-export interface BlogPost {
+export interface BlogPosts {
   id: string;
   slug: string;
   date: string;
@@ -7,14 +7,14 @@ export interface BlogPost {
   content: string;
   author: string;
   category: string;
-  readTime: string;
+  readTime?: string;
   publishedBy?: string;
   imageUrl: string;
   tags: string[];
 }
 
 
-export const blogPosts: BlogPost[] = [
+export const blogPosts: BlogPosts[] = [
     {
         id: '1',
          slug: 'lipi-epics-word-games-mahabharata-launch',

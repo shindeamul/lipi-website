@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, User, Tag, Share2, Facebook, Twitter, Linkedin } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { blogPosts } from "@/data/blogPosts";
+import { BlogPosts, blogPosts } from "@/data/blogPosts";
 import StickyHeader from "@/components/layout/StickyHeader";
 import Footer from "@/components/layout/Footer";
 import NewsletterSection from "@/components/newsletter/NewsletterSection";
@@ -12,11 +12,41 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   
-  const post = blogPosts.find(p => p.slug === slug);
+  const [post, setPost] = useState<BlogPosts | null>(null);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
+
+    if (!slug) {
+      setPost(null);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+
+    fetch(
+      `${import.meta.env.VITE_GOOGLE_SHEET_API}?action=blog&slug=${encodeURIComponent(slug)}`
+    )
+      .then((res) => res.json())
+      .then((data) => setPost(data?.success ? data.blog : null))
+      .catch((err) => {
+        console.error(err);
+        setPost(null);
+      }).finally(() => setLoading(false));
+
   }, [slug]);
+
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -93,6 +123,7 @@ const BlogPost = () => {
             </motion.button>
 
             {/* Category */}
+            <br/>
             <motion.span
               className="inline-block px-4 py-1 bg-orange-500 text-white text-sm font-semibold rounded-full mb-6"
               initial={{ opacity: 0, y: 20 }}
@@ -133,7 +164,7 @@ const BlogPost = () => {
               </span>
               <span className="flex items-center gap-2">
                 <Clock className="w-5 h-5" />
-                {post.readTime}
+                {Math.round((post.content.length/60)/60)+" min read"}
               </span>
             </motion.div>
           </div>
