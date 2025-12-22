@@ -14,8 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        sans: ['Source Sans 3', 'sans-serif'],
         fantasy: ["Cinzel", "serif"],
         elegant: ["Cormorant Garamond", "serif"],
+        
       },
       colors: {
         border: "hsl(var(--border))",
@@ -68,6 +71,10 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        blog: {
+          cream: "#E8CFB2",
+          brown: "#4A3728",
         },
       },
       borderRadius: {
