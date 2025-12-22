@@ -10,6 +10,7 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const ScrollToTop = () => {
 
 const App = () => (
   <HelmetProvider>
+    <RecoilRoot>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
@@ -43,6 +45,7 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
+    </RecoilRoot>
   </HelmetProvider>
 );
 
